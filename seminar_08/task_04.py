@@ -18,7 +18,7 @@ def read_csv(csv_file: str):
 использования csv.DictReader."""
     with open(csv_file, "r", encoding="utf-8") as f:
         csv_reader = csv.reader(f)
-        lines = [line for line in csv_reader]
+        lines = list(csv_reader)
 
     lines[0].append("hash")
     for line in lines[1:]:
