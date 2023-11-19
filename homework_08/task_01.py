@@ -26,11 +26,11 @@ import os
 import pickle
 
 
-def get_directory_size(path: str):
+def get_dir_size(path: str):
     size = 0
     for root, dirs, files in os.walk(path):
         for directory in dirs:
-            size += get_directory_size(os.path.join(root, directory))
+            size += get_dir_size(os.path.join(root, directory))
         for file in files:
             size += os.path.getsize(os.path.join(root, file))
     return size
@@ -67,7 +67,7 @@ def traverse_directory(path: str):
             # temp_dict["parent"] = os.path.split(root)[-1]
 
             # размер папки вместе со всеми вложенными папками и файлами
-            temp_dict["Size"] = get_directory_size(temp_dict["Path"])
+            temp_dict["Size"] = get_dir_size(temp_dict["Path"])
             res_list.append(temp_dict)
 
     return res_list
