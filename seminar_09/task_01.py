@@ -31,6 +31,6 @@ def guess_number():
 
     return input_number
 
-
-guess = guess_number()
-guess()
+if __name__ == '__main__':
+    guess = guess_number()
+    guess()

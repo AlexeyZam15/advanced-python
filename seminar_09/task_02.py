@@ -38,5 +38,5 @@ def guess_number(number: int, attempts: int):
     print("Попытки кончились, число не угадано")
     return
 
-
-guess = guess_number()
+if __name__ == '__main__':
+    guess = guess_number()

@@ -40,6 +40,7 @@ def compose_line(*args, **kwargs):
     return ", ".join([str(arg) for arg in args] + [f"{key}={value}" for key, value in kwargs.items()])
 
 
-compose_line(1, 2, 3, 4, 5, one=1, two=2, three=3, four=4, five=5)
-compose_line(6, 7, 8, 9, 10, six=6, seven=7, eight=8, nine=9, ten=10)
-compose_line(11, 12, 13, 14, 15, eleven=11, twelve=12, thirteen=13, fourteen=14, fifteen=15)
+if __name__ == '__main__':
+    compose_line(1, 2, 3, 4, 5, one=1, two=2, three=3, four=4, five=5)
+    compose_line(6, 7, 8, 9, 10, six=6, seven=7, eight=8, nine=9, ten=10)
+    compose_line(11, 12, 13, 14, 15, eleven=11, twelve=12, thirteen=13, fourteen=14, fifteen=15)
