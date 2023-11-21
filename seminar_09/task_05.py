@@ -5,6 +5,10 @@
 ○ декоратором контроля значений и
 ○ декоратором для многократного запуска.
 Выберите верный порядок декораторов.
+
+Задание №6
+Доработайте прошлую задачу добавив декоратор wraps в
+каждый из декораторов.
 """
 import json
 from functools import wraps
@@ -15,6 +19,7 @@ from typing import Callable
 
 def run_times(times: int):
     def run_func(func: Callable):
+        @wraps(func)
         def wrapper(*args, **kwargs):
             for _ in range(times):
                 func(*args, **kwargs)
