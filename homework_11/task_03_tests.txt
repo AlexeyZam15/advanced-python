@@ -1,0 +1,14 @@
+def add(self, other):
+if isinstance(other, Rectangle):
+new_rectangle = Rectangle(
+(self.x, self.y, self.width, self.height)
+)
+
+    new_rectangle.x = min(self.x, other.x)
+    new_rectangle.y = min(self.y, other.y)
+    new_rectangle.width = max(self.x + self.width, other.x + other.width) - new_rectangle.x
+    new_rectangle.height = max(self.y + self.height, other.y + other.height) - new_rectangle.y
+
+    return new_rectangle
+else:
+    raise TypeError("Нельзя сложить прямоугольник с другим типом данных.")
