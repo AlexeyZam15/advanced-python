@@ -1,0 +1,70 @@
+Не все тесты пройдены, есть ошибки :(
+
+
+Количество затраченных попыток: 1
+
+Время выполнения: 0.992445 сек
+
+Общая статистика
+Всего тестов: 4. Пройдено: 1. Не пройдено: 3.
+
+Подробную информацию по каждому тесту смотрите ниже.
+
+Тест 1
+Тест пройден успешно ✓
+
+Формулировка:
+
+person = Person("", "John", "Doe", 30)
+print()
+
+Тест 2
+Тест не пройден ✗
+
+Формулировка:
+
+person = Person("Alice", "Smith", "Johnson", -5)
+print()
+
+
+Ожидаемый ответ:
+
+__main__.InvalidAgeError: Invalid age: -5. Age should be a positive integer.
+
+Ваш ответ:
+
+__main__.InvalidAgeError: Invalid age: -5. Age should be a positive integer or float.
+Тест 3
+Тест не пройден ✗
+
+Формулировка:
+
+employee = Employee("Bob", "Johnson", "Brown", 40, 12345)
+print()
+
+Ожидаемый ответ:
+
+__main__.InvalidIdError: Invalid id: 12345. Id should be a 6-digit positive integer between 100000 and 999999.
+
+Ваш ответ:
+
+__main__.InvalidIdError: Invalid ID: 12345. ID should be a positive 6-digit integer.
+Тест 4
+Тест не пройден ✗
+
+Формулировка:
+
+person = Person("Alice", "Smith", "Johnson", 25)
+print(person.get_age())
+
+
+Ожидаемый ответ:
+
+25
+
+Ошибка:
+
+Traceback (most recent call last):
+  File "SWTIOR5812UAQ4XFPZ7H.py", line 187, in <module>
+    print(person.get_age())
+AttributeError: 'Person' object has no attribute 'get_age'
