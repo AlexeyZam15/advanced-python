@@ -2,7 +2,7 @@
 Задача из homework_13
 Добавление логирования и запуска с параметрами из командной строки
 """
-from homework_15.task_01.aux_modules.exceptions import *
+from aux_modules.exceptions import *
 
 
 class Rectangle:
@@ -83,7 +83,7 @@ class Rectangle:
     @width.setter
     def width(self, value):
         self.check_width(value)
-        self._width = value
+        self._width = int(value)
 
     @property
     def height(self):
@@ -92,7 +92,7 @@ class Rectangle:
     @height.setter
     def height(self, value):
         self.check_height(value)
-        self._height = value
+        self._height = int(value)
 
     def perimeter(self):
         """
