@@ -1,0 +1,17 @@
+python rectangles_app.py -h
+python rectangles_app.py -sar
+python rectangles_app.py -cr -10 10 r1
+python rectangles_app.py -cr 10 -10 r1
+python rectangles_app.py -cr 10 10 r1
+python rectangles_app.py -sw -5 r1
+python rectangles_app.py -sw 5 r1
+python rectangles_app.py -sh -5 r1
+python rectangles_app.py -sh 5 r1
+python rectangles_app.py -sr r1
+python rectangles_app.py -sr r2
+python rectangles_app.py -p r1
+python rectangles_app.py -a r1
+python rectangles_app.py -cr 10 10 r2
+python rectangles_app.py -sum r1 r2 r3
+python rectangles_app.py -sub r1 r2 r4
+python rectangles_app.py -sar

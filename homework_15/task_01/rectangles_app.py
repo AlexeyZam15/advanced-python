@@ -1,12 +1,10 @@
 import argparse
-import datetime
-from collections import namedtuple
 
 import json
 
-from homework_15.task_01.model.rectangle import Rectangle
-from homework_15.task_01.aux_modules.exceptions import *
-from homework_15.task_01.aux_modules.logger import log_all
+from model.rectangle import Rectangle
+from aux_modules.exceptions import *
+from aux_modules.logger import log_all
 
 import os
 
@@ -17,13 +15,16 @@ class RectanglesApp:
     def __init__(self, rectangle_cls: type, json_file=None):
         self.rectangle_cls = rectangle_cls
         if json_file is None:
-            self._json_file = __file__.split("\\")[-1].split(".")[0] + ".json"
+            self._json_file = os.path.dirname(os.path.abspath(__file__)) + "/" + __file__.split("\\")[-1].split(".")[
+                0] + ".json"
         else:
             if self.check_path(json_file) is not True:
-                self._json_file = __file__.split("\\")[-1].split(".")[0] + ".json"
+                self._json_file = os.path.dirname(os.path.abspath(__file__)) + "/" + \
+                                  __file__.split("\\")[-1].split(".")[0] + ".json"
             else:
                 self._json_file = json_file
-        self.load_from_json()
+        if os.path.exists(self._json_file):
+            self.load_from_json()
 
     @property
     def json_file(self):
@@ -46,26 +47,37 @@ class RectanglesApp:
 
     @log_all
     def create_rectangle(self, width, height, name):
-        rectangle = Rectangle(width, height, name)
-        self._rectangles_dict[name] = rectangle
-        self.save_to_json()
+        try:
+            rectangle = Rectangle(width, height, name)
+            self._rectangles_dict[name] = rectangle
+            self.save_to_json()
+        except MyBaseException as mbe:
+            print(mbe)
+            raise mbe
         return rectangle
 
     @log_all
     def set_width(self, name, value):
-        self.check_rectangle(name)
-        self._rectangles_dict[name].width = value
-        self.save_to_json()
+        try:
+            self.check_rectangle(name)
+            self._rectangles_dict[name].width = value
+            self.save_to_json()
+        except MyBaseException as mbe:
+            print(mbe)
+            raise mbe
         return self._rectangles_dict[name]
 
     @log_all
     def set_height(self, name, value):
-        self.check_rectangle(name)
-        self._rectangles_dict[name].height = value
-        self.save_to_json()
+        try:
+            self.check_rectangle(name)
+            self._rectangles_dict[name].height = value
+            self.save_to_json()
+        except MyBaseException as mbe:
+            print(mbe)
+            raise mbe
         return self._rectangles_dict[name]
 
-    @log_all
     def check_rectangle(self, name):
         if name not in self._rectangles_dict:
             try:
@@ -76,16 +88,24 @@ class RectanglesApp:
 
     @log_all
     def sum(self, r1_name, r2_name, new_name):
-        self.check_rectangle(r1_name)
-        self.check_rectangle(r2_name)
-        res = self._rectangles_dict[r1_name] + self._rectangles_dict[r2_name]
+        try:
+            self.check_rectangle(r1_name)
+            self.check_rectangle(r2_name)
+            res = self._rectangles_dict[r1_name] + self._rectangles_dict[r2_name]
+        except MyBaseException as mbe:
+            print(mbe)
+            raise mbe
         return self.create_rectangle(res.width, res.height, new_name)
 
     @log_all
     def sub(self, r1_name, r2_name, new_name):
-        self.check_rectangle(r1_name)
-        self.check_rectangle(r2_name)
-        res = self._rectangles_dict[r1_name] - self._rectangles_dict[r2_name]
+        try:
+            self.check_rectangle(r1_name)
+            self.check_rectangle(r2_name)
+            res = self._rectangles_dict[r1_name] - self._rectangles_dict[r2_name]
+        except MyBaseException as mbe:
+            print(mbe)
+            raise mbe
         return self.create_rectangle(res.width, res.height, new_name)
 
     def __repr__(self):
@@ -102,7 +122,11 @@ class RectanglesApp:
 
     @log_all
     def get_rectangle(self, name):
-        self.check_rectangle(name)
+        try:
+            self.check_rectangle(name)
+        except MyBaseException as mbe:
+            print(mbe)
+            raise mbe
         return self._rectangles_dict[name]
 
     @log_all
@@ -128,8 +152,7 @@ class RectanglesApp:
 
 
 if __name__ == '__main__':
-    app = RectanglesApp(Rectangle, "json/rectangles_app.json")
-    # RectangleTuple = namedtuple('Rectangle', 'width height name')
+    app = RectanglesApp(Rectangle, os.path.dirname(os.path.abspath(__file__)) + "/json/rectangles_app.json")
     parser = argparse.ArgumentParser(description="Создание прямоугольников и выполнение операций с ними")
     parser.add_argument('-cr', '--create_rectangles', metavar=('width', 'height', 'name'),
                         help='создание прямоугольников с указанными шириной, высотой, и именем',
@@ -152,40 +175,66 @@ if __name__ == '__main__':
     parser.add_argument('-a', "--area", metavar='r_name',
                         help='получение площади прямоугольника с указанным именем',
                         type=str, action="append")
+    parser.add_argument('-sr', "--show_rectangle", metavar='r_name',
+                        help='получение строкового представления прямоугольника с указанным именем',
+                        type=str, action="append")
+    parser.add_argument('-sar', "--show_all_rectangles",
+                        help='получение строкового представления всех прямоугольников', action="store_true")
 
     args = parser.parse_args()
 
     if args.create_rectangles:
         for r in args.create_rectangles:
-            app.create_rectangle(r[0], r[1], r[2])
-            print(f"Прямоугольник {r[2]} создан с шириной {r[0]} и высотой {r[1]}\n")
+            if app.create_rectangle(r[0], r[1], r[2]):
+                print(f"Прямоугольник {r[2]} создан с шириной {r[0]} и высотой {r[1]}")
 
     if args.set_width:
         for r in args.set_width:
-            app.set_width(r[1], r[0])
-            print(f"Ширина прямоугольника {r[1]} изменена на {r[0]}")
+            if app.set_width(r[1], r[0]):
+                print(f"Ширина прямоугольника {r[1]} изменена на {r[0]}")
 
     if args.set_height:
         for r in args.set_height:
-            app.set_height(r[1], r[0])
-            print(f"Высота прямоугольника {r[1]} изменена на {r[0]}")
+            if app.set_height(r[1], r[0]):
+                print(f"Высота прямоугольника {r[1]} изменена на {r[0]}")
 
     if args.sum:
         for r in args.sum:
             res = app.sum(r[0], r[1], r[2])
-            print(f"Прямоугольник {r[2]} создан из суммы прямоугольников {r[0]} и {r[1]}")
-            print(f"Полученный прямоугольник - {res}")
+            if res:
+                print(f"Прямоугольник {r[2]} создан из суммы прямоугольников {r[0]} и {r[1]}")
+                print(f"Полученный прямоугольник - {res}")
 
     if args.sub:
         for r in args.sub:
             res = app.sub(r[0], r[1], r[2])
-            print(f"Прямоугольник {r[2]} создан из разности прямоугольников {r[0]} и {r[1]}")
-            print(f"Полученный прямоугольник - {res}")
+            if res:
+                print(f"Прямоугольник {r[2]} создан из разности прямоугольников {r[0]} и {r[1]}")
+                print(f"Полученный прямоугольник - {res}")
 
     if args.perimeter:
         for r in args.perimeter:
-            print(f"Периметр прямоугольника {r} равен {app.get_rectangle(r).perimeter()}")
+            rectangle = app.get_rectangle(r)
+            if rectangle:
+                print(f"Периметр прямоугольника {r} равен {rectangle.perimeter()}")
 
     if args.area:
         for r in args.area:
-            print(f"Площадь прямоугольника {r} равна {app.get_rectangle(r).area()}")
+            rectangle = app.get_rectangle(r)
+            if rectangle:
+                print(f"Площадь прямоугольника {r} равна {rectangle.area()}")
+
+    if args.show_rectangle:
+        for r in args.show_rectangle:
+            rectangle = app.get_rectangle(r)
+            if rectangle:
+                print(app.get_rectangle(r))
+
+    if args.show_all_rectangles:
+        rectangles = app.get_rectangles()
+        if rectangles:
+            print("Все прямоугольники:")
+            for r in app.get_rectangles():
+                print(r)
+        else:
+            print("Нет созданных прямоугольников")
