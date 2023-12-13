@@ -75,19 +75,17 @@ class RectanglesApp:
         return True
 
     @log_all
-    def rectangles_sum(self, new_name, *r_names):
-        for r_name in r_names:
-            self.check_rectangle(r_name)
-        res_rectangle = None
-        for i in range(len(r_names) - 1):
-            res_rectangle = self._rectangles_dict[r_names[i]] + self._rectangles_dict[r_names[i + 1]]
-        return self.create_rectangle(res_rectangle.width, res_rectangle.height, new_name)
+    def sum(self, r1_name, r2_name, new_name):
+        self.check_rectangle(r1_name)
+        self.check_rectangle(r2_name)
+        res = self._rectangles_dict[r1_name] + self._rectangles_dict[r2_name]
+        return self.create_rectangle(res.width, res.height, new_name)
 
     @log_all
-    def rectangles_sub(self, new_name, rectangle1_name, rectangle2_name):
-        self.check_rectangle(rectangle1_name)
-        self.check_rectangle(rectangle2_name)
-        res = self._rectangles_dict[rectangle1_name] - self._rectangles_dict[rectangle2_name]
+    def sub(self, r1_name, r2_name, new_name):
+        self.check_rectangle(r1_name)
+        self.check_rectangle(r2_name)
+        res = self._rectangles_dict[r1_name] - self._rectangles_dict[r2_name]
         return self.create_rectangle(res.width, res.height, new_name)
 
     def __repr__(self):
@@ -133,29 +131,61 @@ if __name__ == '__main__':
     app = RectanglesApp(Rectangle, "json/rectangles_app.json")
     # RectangleTuple = namedtuple('Rectangle', 'width height name')
     parser = argparse.ArgumentParser(description="Создание прямоугольников и выполнение операций с ними")
-    parser.add_argument('-r', '--rectangles', metavar=('width', 'height', 'name'),
+    parser.add_argument('-cr', '--create_rectangles', metavar=('width', 'height', 'name'),
                         help='создание прямоугольников с указанными шириной, высотой, и именем',
                         type=str, action="append", nargs=3)
     parser.add_argument('-sw', '--set_width', metavar=('width', 'name'),
                         help='изменение ширины прямоугольника с указанным именем',
                         type=str, action="append", nargs=2)
+    parser.add_argument('-sh', '--set_height', metavar=('height', 'name'),
+                        help='изменение высоты прямоугольника с указанным именем',
+                        type=str, action="append", nargs=2)
+    parser.add_argument('-sum', metavar=('r1_name', 'r2_name', 'new_r_name'),
+                        help='сложение прямоугольников с указанными именами и создание нового',
+                        type=str, action="append", nargs=3)
+    parser.add_argument('-sub', metavar=('r1_name', 'r2_name', 'new_r_name'),
+                        help='вычитание прямоугольников с указанными именами и создание нового',
+                        type=str, action="append", nargs=3)
+    parser.add_argument('-p', "--perimeter", metavar='r_name',
+                        help='получение периметра прямоугольника с указанным именем',
+                        type=str, action="append")
+    parser.add_argument('-a', "--area", metavar='r_name',
+                        help='получение площади прямоугольника с указанным именем',
+                        type=str, action="append")
+
     args = parser.parse_args()
 
-    if args.rectangles:
-        for r in args.rectangles:
+    if args.create_rectangles:
+        for r in args.create_rectangles:
             app.create_rectangle(r[0], r[1], r[2])
+            print(f"Прямоугольник {r[2]} создан с шириной {r[0]} и высотой {r[1]}\n")
 
     if args.set_width:
         for r in args.set_width:
             app.set_width(r[1], r[0])
+            print(f"Ширина прямоугольника {r[1]} изменена на {r[0]}")
 
-    # app = RectanglesApp(Rectangle, "json/rectangles_app.json")
-    # app.load_from_json()
-    # app.create_rectangle(10, 10, "r1")
-    # app.create_rectangle(20, 20, "r2")
-    # app.set_width("r1", -5)
-    # app.set_height("r1", -5)
-    # app.rectangles_sum("r3", "r1", "r2")
-    # app.rectangles_sub("r4", "r1", "r2")
-    # print(*app.get_rectangles(), sep="\n")
-    # app.save_to_json()
+    if args.set_height:
+        for r in args.set_height:
+            app.set_height(r[1], r[0])
+            print(f"Высота прямоугольника {r[1]} изменена на {r[0]}")
+
+    if args.sum:
+        for r in args.sum:
+            res = app.sum(r[0], r[1], r[2])
+            print(f"Прямоугольник {r[2]} создан из суммы прямоугольников {r[0]} и {r[1]}")
+            print(f"Полученный прямоугольник - {res}")
+
+    if args.sub:
+        for r in args.sub:
+            res = app.sub(r[0], r[1], r[2])
+            print(f"Прямоугольник {r[2]} создан из разности прямоугольников {r[0]} и {r[1]}")
+            print(f"Полученный прямоугольник - {res}")
+
+    if args.perimeter:
+        for r in args.perimeter:
+            print(f"Периметр прямоугольника {r} равен {app.get_rectangle(r).perimeter()}")
+
+    if args.area:
+        for r in args.area:
+            print(f"Площадь прямоугольника {r} равна {app.get_rectangle(r).area()}")

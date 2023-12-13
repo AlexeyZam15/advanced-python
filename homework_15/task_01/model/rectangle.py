@@ -28,12 +28,12 @@ class Rectangle:
     def __init__(self, width, height=None, name=None):
         self._name = name
         self.check_width(width)
-        self._width = width
+        self._width = int(width)
         if height is None:
-            self._height = width
+            self._height = int(width)
         else:
             self.check_height(height)
-            self._height = height
+            self._height = int(height)
 
     @property
     def name(self):
