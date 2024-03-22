@@ -1,0 +1,246 @@
+Все юнит-тесты пройдены успешно, поздравляем!
+
+Количество затраченных попыток: 8
+
+Время выполнения: 2.251266 сек
+
+Общая статистика
+Всего тестов: 6. Пройдено: 6. Не пройдено: 0.
+
+Подробную информацию по каждому тесту смотрите ниже.
+
+Тест 1
+Тест пройден успешно ✓
+
+Формулировка:
+
+* Имя проверяемого метода/функции: key_params
+
+* Аргументы, передаваемые в метод/функцию:
+
+
+a = 1
+b = 'hello'
+c = [1, 2, 3]
+d = {}
+
+
+* Итоговый код для проверки.
+
+
+import warnings
+
+warnings.filterwarnings('ignore')
+
+# Введите ваше решение ниже
+
+import typing
+
+
+def key_params(**kwargs):
+    dict_ = {}
+    for i in kwargs:
+        if isinstance(kwargs[i], typing.Hashable):
+            dict_[kwargs[i]] = i
+        else:
+            dict_[str(kwargs[i])] = i
+    return dict_
+ 
+
+print(key_params(a = 1, b = 'hello', c = [1, 2, 3], d = {}))
+Тест 2
+Тест пройден успешно ✓
+
+Формулировка:
+
+* Имя проверяемого метода/функции: key_params
+
+* Аргументы, передаваемые в метод/функцию:
+
+
+a = 42
+b = 'hello'
+c = 3.14
+d = 'world'
+
+
+* Итоговый код для проверки.
+
+
+import warnings
+
+warnings.filterwarnings('ignore')
+
+# Введите ваше решение ниже
+
+import typing
+
+
+def key_params(**kwargs):
+    dict_ = {}
+    for i in kwargs:
+        if isinstance(kwargs[i], typing.Hashable):
+            dict_[kwargs[i]] = i
+        else:
+            dict_[str(kwargs[i])] = i
+    return dict_
+ 
+
+print(key_params(a = 42, b = 'hello', c = 3.14, d = 'world'))
+Тест 3
+Тест пройден успешно ✓
+
+Формулировка:
+
+* Имя проверяемого метода/функции: key_params
+
+* Аргументы, передаваемые в метод/функцию:
+
+
+a = None
+b = ''
+c = []
+d = {}
+
+
+* Итоговый код для проверки.
+
+
+import warnings
+
+warnings.filterwarnings('ignore')
+
+# Введите ваше решение ниже
+
+import typing
+
+
+def key_params(**kwargs):
+    dict_ = {}
+    for i in kwargs:
+        if isinstance(kwargs[i], typing.Hashable):
+            dict_[kwargs[i]] = i
+        else:
+            dict_[str(kwargs[i])] = i
+    return dict_
+ 
+
+print(key_params(a = None, b = '', c = [], d = {}))
+Тест 4
+Тест пройден успешно ✓
+
+Формулировка:
+
+* Имя проверяемого метода/функции: key_params
+
+* Аргументы, передаваемые в метод/функцию:
+
+
+a = 42
+b = 'hello'
+c = 3.14
+d = 'world'
+
+
+* Итоговый код для проверки.
+
+
+import warnings
+
+warnings.filterwarnings('ignore')
+
+# Введите ваше решение ниже
+
+import typing
+
+
+def key_params(**kwargs):
+    dict_ = {}
+    for i in kwargs:
+        if isinstance(kwargs[i], typing.Hashable):
+            dict_[kwargs[i]] = i
+        else:
+            dict_[str(kwargs[i])] = i
+    return dict_
+ 
+
+print(key_params(a = 42, b = 'hello', c = 3.14, d = 'world'))
+Тест 5
+Тест пройден успешно ✓
+
+Формулировка:
+
+* Имя проверяемого метода/функции: key_params
+
+* Аргументы, передаваемые в метод/функцию:
+
+
+a = True
+b = False
+c = True
+d = False
+
+
+* Итоговый код для проверки.
+
+
+import warnings
+
+warnings.filterwarnings('ignore')
+
+# Введите ваше решение ниже
+
+import typing
+
+
+def key_params(**kwargs):
+    dict_ = {}
+    for i in kwargs:
+        if isinstance(kwargs[i], typing.Hashable):
+            dict_[kwargs[i]] = i
+        else:
+            dict_[str(kwargs[i])] = i
+    return dict_
+ 
+
+print(key_params(a = True, b = False, c = True, d = False))
+Тест 6
+Тест пройден успешно ✓
+
+Формулировка:
+
+* Имя проверяемого метода/функции: key_params
+
+* Аргументы, передаваемые в метод/функцию:
+
+
+name = 'Alice'
+age = 30
+scores = [85, 90, 78]
+info = {'city': 'New York', 'email': 'alice@example.com'}
+
+
+* Итоговый код для проверки.
+
+
+import warnings
+
+warnings.filterwarnings('ignore')
+
+# Введите ваше решение ниже
+
+import typing
+
+
+def key_params(**kwargs):
+    dict_ = {}
+    for i in kwargs:
+        if isinstance(kwargs[i], typing.Hashable):
+            dict_[kwargs[i]] = i
+        else:
+            dict_[str(kwargs[i])] = i
+    return dict_
+ 
+
+print(key_params(name = 'Alice', age = 30, scores = [85, 90, 78], info = {'city': 'New York', 'email': 'alice@example.com'}))
+ 
